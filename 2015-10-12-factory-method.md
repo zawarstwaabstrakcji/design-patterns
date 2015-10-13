@@ -33,7 +33,7 @@ class ObjectFactory implements Factory
 
 {% block when_to_use %}
 Wzorzec świetnie sprawdza się w sytuacjach, w których należy utworzyć obiekt posiadający pewien predefiniowany
-zestaw zachowań (implementuje interfejs), których oczekujemy jednak sam typ obiektu nie jest istotny.
+zestaw zachowań (implementuje interfejs), których oczekujemy, jednak sam typ obiektu nie jest istotny.
 {% endblock %}
 
 {% block example_specification %}
@@ -114,6 +114,6 @@ W powyższym przykładzie usługa ```UserRegistrationService``` nie dba o to jak
 jest jej przeznaczenie. Dzięki temu usługa może być rozszerzana poprzez przekazanie jej innej implementacji ``UserFactory``
 bez konieczności modyfikowania kodu samej usługi.  
 Wzorzec jest również pomocny w przypadku uruchamiania aplikacji w środowisku testowym nie polegającym na żadnej 
-bazie danych. Rodzaj fabryki może być zależny od środowiska dzięki czemu raz utworzona zostanie encja, która w jakiś sposób
-mapowana jest na bazę danych a raz czysta, nie będąca powiązana z niczym zewnętrznym. 
+bazie danych. Rodzaj fabryki może być zależny od środowiska, dzięki czemu raz utworzona zostanie encja która w jakiś sposób
+mapowana jest na bazę danych, a raz encja "czysta", nie będąca powiązana z niczym zewnętrznym. 
 {% endblock %}
