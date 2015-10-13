@@ -19,16 +19,15 @@ argumenty i nie wykonują żadnych operacji.
 
 {% block dummy_implementation_php %}
 ```language-php
-interface CalculationStrategy
+interface Strategy
 {
-    public function calculate($input);
+    public function doSomething();
 }
 
-final class NullStrategy implements CalculationStrategy
+final class NullStrategy implements Strategy
 {
-    public function calculate($input) 
+    public function doSomething() 
     {
-        return 0;
     }
 }
 ```
