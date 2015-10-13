@@ -4,7 +4,7 @@ description: >
     Wzorzec polega na utworzeniu klasy implementującej konkretny interfejs jednak nie posiadającej żadnego zachowania. 
     Wszystkie metody wymagane przez interfejs zwracają pusty wynik lub niezmodyfikowane argumenty i nie wykonują żadnych operacji. 
 enabled: true
-type: null
+type: Czynnościowy
 usage_info: >
     Wykorzysatnie tego wzorca może utrudnić debugowanie kodu. Ma to miejsce w przypadku kiedy spodziewamy się 
     jakiegoś zachowania patrząc na wykorzystany interfejs jednak jego implementacja opiera się o wzorzec <strong>Null Object</strong>.
