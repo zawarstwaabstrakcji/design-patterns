@@ -63,10 +63,10 @@ final class InMemoryRepository implements ObjectRepository
 
 {% block when_to_use %}
 Repozytorium reprezentuje kolekcję encji tego samego typu. Przykładem może być kolekcja użytkowników. 
-Ponieważ większość encji występuje w postaci kolekcji repozytorium praktycznie należy stosować za każdym razem
+Ponieważ większość encji występuje w postaci kolekcji, repozytorium praktycznie należy stosować za każdym razem
 kiedy potrzebujemy przeszukać kolekcję encji.  
-W przypadkach gdzie kolekcja ma być przeszukana przy użyciu większej ilości kryteriów można wprowadzić dodatkowy obiekt
-``Criteria`` które przyjmie wszystkie parametry wyszukiwania i na ich podstawie zwróci pasujące encje. 
+W przypadkach gdzie kolekcja ma być przeszukana przy użyciu większej ilości kryteriów, można wprowadzić dodatkowy obiekt
+``Criteria`` który przyjmie wszystkie parametry wyszukiwania i na ich podstawie zwróci pasujące encje. 
 {% endblock %}
 
 {% block example_specification %}
@@ -185,7 +185,7 @@ class UserController
 
 {% block example_explanation %}
 W przykładzie pokazano najbardziej istotną cechę repozytorium a jest nią dostarczenie interfejsu kolekcji 
-reprezentującej zbiór encji. Poza wyżej wymienionymi przykładami kolekcja pozwala również na **usunięcie** elementu.
-W bardziej złożonych przypadkach, metody ``findByXXX`` można zastąpić metodą ``findBy(Criteria $criteria`` gdzie
-obiekt ``Criteria`` zawiera wszystkie dane na podstawie, których należy przeszukać kolekcję.
+reprezentującej zbiór encji. Poza wyżej wymienionymi przykładami, kolekcja pozwala również na **usunięcie** elementu.
+W bardziej złożonych przypadkach, metody ``findByXXX`` można zastąpić metodą ``findBy(Criteria $criteria)`` gdzie
+obiekt ``Criteria`` zawiera wszystkie dane na podstawie których należy przeszukać kolekcję.
 {% endblock %}
