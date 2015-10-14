@@ -2,9 +2,9 @@
 title: Virtual proxy
 description: >
     Wzorzec stworzony w celu kontrolowania tworzenia lub dostępu do kosztownych obiektów. Oryginalny obiekt zastępowany
-    jest przez proxy, które dziedziczy z orignału dzięki czemu dostarcza identyczne API i może być użyty zamiast oryginału.
+    jest przez proxy, które dziedziczy z oryginału dzięki czemu dostarcza identyczne API i może być użyty zamiast oryginału.
     Oryginaly obiekt może być utworzony na żądanie.
-enabled: false
+enabled: true
 type: Strukturalny 
 usage_info: null
 posts: []
@@ -12,8 +12,8 @@ posts: []
 ---
 {% block description %}
 Wzorzec stworzony w celu kontrolowania tworzenia lub dostępu do kosztownych obiektów. Oryginalny obiekt zastępowany
-jest przez proxy, które dziedziczy z orignału dzięki czemu dostarcza identyczne API i może być użyty zamiast oryginału.
-Oryginaly obiekt może być utworzony na żądanie.  
+jest przez proxy, które dziedziczy z oryginału dzięki czemu dostarcza identyczne API i może być użyty zamiast oryginału.
+Oryginalny obiekt może być utworzony na żądanie.  
 Wykorzystywany w sytuacjach, w których należy utworzyć obiekt w celu dostępu do części tego obiektu podczas
 gdy pozostała jego część jest nieużywana. 
 {% endblock %}
@@ -89,6 +89,8 @@ class ObjectProxy extends Object
         foreach ($elements as $element) {
             $this->object->addElement($element);
         }
+        
+        $this->isInitialized = true;
     }
 }
 ```
@@ -104,8 +106,8 @@ resztę pozostawi bez zmian nawet ich nie inicjalizując.
 {% block example_specification %}
 - W systemie istnieje faktura o numerze "Faktura 2015-01-01"
 - Faktura o numerze "Faktura 2015-01-01" posiada 250 pozycji. 
-- Faktura o numerze "Faktura 2015-01-01" została wystawiona z terminem płatności 7 dni
-- Zmień termin płatności faktury o numerze "Faktura 2015-01-01" z 7 dni na 14 dni bez ładowania do pamięci wszystkich pozycji na fakturze.
+- Pobierz całkowitą kwotę na jaką została wystawiona faktura bez ładowania wszystkich pozycji.
+- Kwota całkowita to suma cen wszystkich pozycji na fakturze.
 {% endblock %}
 
 {% block example_code_php %}
@@ -116,18 +118,18 @@ class Invoice
     private $number;
     
     private $items;
-    
-    private $paymentDeadline;
-    
-    public function __construct(Number $number)
+
+    public function __construct(Number $number, $items = [])
     {
         $this->number = $number;
-        $this->paymentDeadline = new Days(7);
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
     }
     
-    public function changePaymentDeadline(Days $newDeadline)
+    public function getNumber()
     {
-        $this->paymentDeadline = $newDeadline;
+        return $this->number;
     }
     
     public function addItem(Item $item)
@@ -139,10 +141,80 @@ class Invoice
     {
         return $this->items;
     }
+    
+    public function getTotalPrice()
+    {
+        $total = new Money(0, 'PLN');
+        
+        foreach ($this->items as $item) {
+            $total->add($item->getPrice());
+        }
+        
+        return $total;
+    }
+}
+
+class IvnoiceProxy extends Invoice
+{
+    private $invoice; 
+    
+    private $storage;
+    
+    private $isInitialized;
+    
+    public function __construct(Storage $storage, Number $number, $items = [])
+    {
+        $this->storage = $storage;
+        $this->invoice = new Invoice($number, []);
+        $this->isInitialized = false;
+    }
+    
+    public function getNumber()
+    {
+        return $this->invoice->getNumber();
+    }
+    
+    public function addItem(Item $item)
+    {
+        $this->items[] = $item;
+    }
+    
+    public function getItems()
+    {
+        $this->initialize();
+        return $this->items;
+    }
+    
+    public function getTotalPrice()
+    {
+        $amount = $this->storage->calculateTotalPriceForInvoice($this->invoice->getNumber());
+        
+        return new Money($amount, 'PLN');
+    }
+   
+    private function initialize()
+    {
+        if ($this->isInitialized) {
+            return ;
+        }
+        
+        $items = $this->storage->getItemsForInvoice($this->invoice->getNumber());
+        
+        foreach ($items as $item) {
+            $this->invoice->addItem($item);
+        }
+        
+        $this->isInitialized = true;
+    }
 }
 ```
 {% endblock %}
 
 {% block example_explanation %}
-// TODO
+W przykładzie pokazana została sytuacja, w której tworzenie obiektu z wszystkimi jego zależnościami może okazać się 
+niewydajne i niepotrzebne. Virtual Proxy rozwiązuje ten problem poprzez załadowanie najcięższych zależności obiektu
+dopiero kiedy są one faktycznie wykorzystywane, tzw. *lazy loading*. W tym przypadku ładowanie wszystkich przedmiotów na fakturze nie miało
+większego sensu kiedy celem było jedynie policzenie całkowitej kwoty na jaką została wystawiona faktura. 
+Tą operację lepiej przenieść na silnik bazodanowy lub jakąś zewnętrzną usługę, która z takimi obliczeniami poradzi 
+sobie o wiele lepiej niż aplikacja.
 {% endblock %}
