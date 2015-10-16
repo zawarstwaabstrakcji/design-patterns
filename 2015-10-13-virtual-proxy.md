@@ -43,7 +43,7 @@ class Object
     
     public function getCollection()
     {
-        return $this->collection();
+        return $this->collection;
     }
 }
 
