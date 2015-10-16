@@ -103,7 +103,7 @@ interface UserRepository
     public function hasUserWith(Email $email);
 }
 
-interface DAORepository
+final class DAORepository implements UserRepository
 {
     private $dao;
     
