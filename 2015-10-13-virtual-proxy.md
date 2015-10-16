@@ -96,6 +96,24 @@ class ObjectProxy extends Object
 ```
 {% endblock %}
 
+{% block dummy_implementation_ruby %}
+```language-ruby
+// TODO
+```
+{% endblock %}
+
+{% block dummy_implementation_java %}
+```language-java
+// TODO
+```
+{% endblock %}
+
+{% block dummy_implementation_c_sharp %}
+```language-csharp
+// TODO
+```
+{% endblock %}
+
 {% block when_to_use %}
 Virtual Proxy świetnie sprawdza się w sytuacjach, w których operacje biznesowe polegają na obiektach, których tworzenie 
 jest kosztowne. Jeżeli chcemy wykonać jedną operację przy użyciu obiektu, który jest powiązany z ogromną ilością innych
@@ -207,6 +225,24 @@ class IvnoiceProxy extends Invoice
         $this->isInitialized = true;
     }
 }
+```
+{% endblock %}
+
+{% block example_code_ruby %}
+```language-ruby
+// TODO
+```
+{% endblock %}
+
+{% block example_code_java %}
+```language-java
+// TODO
+```
+{% endblock %}
+
+{% block example_code_c_sharp %}
+```language-csharp
+// TODO
 ```
 {% endblock %}
 

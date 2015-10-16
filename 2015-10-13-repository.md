@@ -61,6 +61,24 @@ final class InMemoryRepository implements ObjectRepository
 ```
 {% endblock %}
 
+{% block dummy_implementation_ruby %}
+```language-ruby
+// TODO
+```
+{% endblock %}
+
+{% block dummy_implementation_java %}
+```language-java
+// TODO
+```
+{% endblock %}
+
+{% block dummy_implementation_c_sharp %}
+```language-csharp
+// TODO
+```
+{% endblock %}
+
 {% block when_to_use %}
 Repozytorium reprezentuje kolekcję encji tego samego typu. Przykładem może być kolekcja użytkowników. 
 Ponieważ większość encji występuje w postaci kolekcji, repozytorium praktycznie należy stosować za każdym razem
@@ -180,6 +198,24 @@ class UserController
         return new Response($this->templateEngine->render('user_template.html', ['user' => $user]));
     }
 }
+```
+{% endblock %}
+
+{% block example_code_ruby %}
+```language-ruby
+// TODO
+```
+{% endblock %}
+
+{% block example_code_java %}
+```language-java
+// TODO
+```
+{% endblock %}
+
+{% block example_code_c_sharp %}
+```language-csharp
+// TODO
 ```
 {% endblock %}
 

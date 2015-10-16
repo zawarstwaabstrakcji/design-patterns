@@ -18,6 +18,24 @@ posts: []
 ```
 {% endblock %}
 
+{% block dummy_implementation_ruby %}
+```language-ruby
+
+```
+{% endblock %}
+
+{% block dummy_implementation_java %}
+```language-java
+
+```
+{% endblock %}
+
+{% block dummy_implementation_c_sharp %}
+```language-csharp
+
+```
+{% endblock %}
+
 {% block when_to_use %}
 
 {% endblock %}
@@ -30,6 +48,24 @@ posts: []
 
 {% block example_code_php %}
 ```language-php
+
+```
+{% endblock %}
+
+{% block example_code_ruby %}
+```language-ruby
+
+```
+{% endblock %}
+
+{% block example_code_java %}
+```language-java
+
+```
+{% endblock %}
+
+{% block example_code_c_sharp %}
+```language-csharp
 
 ```
 {% endblock %}

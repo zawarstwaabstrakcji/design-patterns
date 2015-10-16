@@ -31,6 +31,24 @@ class ObjectFactory implements Factory
 ```
 {% endblock %}
 
+{% block dummy_implementation_ruby %}
+```language-ruby
+// TODO
+```
+{% endblock %}
+
+{% block dummy_implementation_java %}
+```language-java
+// TODO
+```
+{% endblock %}
+
+{% block dummy_implementation_c_sharp %}
+```language-csharp
+// TODO
+```
+{% endblock %}
+
 {% block when_to_use %}
 Wzorzec świetnie sprawdza się w sytuacjach, w których należy utworzyć obiekt posiadający pewien predefiniowany
 zestaw zachowań (implementuje interfejs), których oczekujemy, jednak sam typ obiektu nie jest istotny.
@@ -106,6 +124,24 @@ final class UserRegistrationService
         // do something with user
     }
 }
+```
+{% endblock %}
+
+{% block example_code_ruby %}
+```language-ruby
+// TODO
+```
+{% endblock %}
+
+{% block example_code_java %}
+```language-java
+// TODO
+```
+{% endblock %}
+
+{% block example_code_c_sharp %}
+```language-csharp
+// TODO
 ```
 {% endblock %}
 

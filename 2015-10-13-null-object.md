@@ -33,6 +33,24 @@ final class NullStrategy implements Strategy
 ```
 {% endblock %}
 
+{% block dummy_implementation_ruby %}
+```language-ruby
+// TODO
+```
+{% endblock %}
+
+{% block dummy_implementation_java %}
+```language-java
+// TODO
+```
+{% endblock %}
+
+{% block dummy_implementation_c_sharp %}
+```language-csharp
+// TODO
+```
+{% endblock %}
+
 {% block when_to_use %}
 Wzorzec znajduje zastosowanie w przypadkach kiedy implementacja danego interfejsu jest wymagana, jednak samo zachowanie 
 nie jest istotne, lub kiedy implementacja interfejsu reprezentuje konkretną strategię. 
@@ -79,6 +97,24 @@ class MessageSenderService
         $this->logger("Post send message: %d", $message->getId());
     }
 }
+```
+{% endblock %}
+
+{% block example_code_ruby %}
+```language-ruby
+// TODO
+```
+{% endblock %}
+
+{% block example_code_java %}
+```language-java
+// TODO
+```
+{% endblock %}
+
+{% block example_code_c_sharp %}
+```language-csharp
+// TODO
 ```
 {% endblock %}
 
