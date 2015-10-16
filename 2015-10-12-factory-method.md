@@ -98,11 +98,11 @@ final class MultipleUserTypeFactory implements UserFactory
     public function createFrom(array $data)
     {
         if (array_key_exists('nip', $data) {
-            return new Company(new Nip[$data['nip']);
+            return new Company(new Nip($data['nip']));
         }
         
         if (array_key_exists('pesel', $data]) {
-            return new Company(new PESEL[$data['pesel']);
+            return new Company(new PESEL($data['pesel']));
         }
         
         throw new \InvalidArgumentException("Data required to create User needs to have PESEL or NIP.");
