@@ -149,7 +149,7 @@ final class UserRegistrationService
     {
         $email = new Email($data['email']);
         
-        if ($this->users->hasUserWith() {
+        if ($this->users->hasUserWith($email)) {
             throw new EmailAlreadyUsedException;
         }
         
