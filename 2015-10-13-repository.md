@@ -6,7 +6,10 @@ description: >
     są w postaci obiektów.
 enabled: true
 type: null 
-usage_info: null
+usage_info: >
+    Repozytorium należy traktować jak kolekcję encji. Kolekcja pozwala jedynie na dodanie, usunięcie, sprawdzenie czy element 
+    istnieje lub wyszukanie go na podstawie pewnych kryteriów. W związku z tym nie należy umieszczać w repozytorium 
+    metod związanych np. z generowaniem danych, tworzeniem zapytań czy nawet tworzeniem encji.
 posts: []
 
 ---
@@ -22,7 +25,7 @@ interface ObjectRepository
 {
     public function add(Object $object);
     
-    public function findBy(Id $id);
+    public function getById(Id $id);
     
     public function remove(Object $object);
     
@@ -43,9 +46,13 @@ final class InMemoryRepository implements ObjectRepository
         $this->objects[(string) $object->getId()] = $object;
     }
     
-    public function findBy(Id $id)
+    public function getById(Id $id)
     {
-        return array_key_exists((string) $id, $object) ? $this->objects[(string) $id] : null;
+        if (!array_key_exists((string) $id, $object)) {
+            throw new UserNotFoundException();
+        }
+        
+        return $this->objects[(string) $id];
     }
     
     public function remove(Object $object)
@@ -116,9 +123,9 @@ interface UserRepository
 {
     public function add(User $user);
     
-    public function findBy(Email $email);
+    public function getByEmail(Email $email);
     
-    public function hasUserWith(Email $email);
+    public function hasUserWithEmail(Email $email);
 }
 
 final class DAORepository implements UserRepository
@@ -137,20 +144,20 @@ final class DAORepository implements UserRepository
         ]);
     }
     
-    public function findBy(Email $email)
+    public function getByEmail(Email $email)
     {
-        $userData = $this->dao->findBy((string) $email);
+        $userData = $this->dao->getUserDataByEmail((string) $email);
         
-        if (!is_null($userData)) { 
-            return new User(new Email($userData['email']));
+        if (empty($userData)) { 
+            throw new UserNotFoundException();
         }
         
-        return ;
+        return new User(new Email($userData['email']));
     }
     
-    public function hasUserWith(Email $email)
+    public function hasUserWithEmail(Email $email)
     {
-        return $this->dao->hasUserWith((string) $email);
+        return $this->dao->hasUserDataWithEmail((string) $email);
     }
 }
 
@@ -167,7 +174,7 @@ final class UserRegistrationService
     {
         $email = new Email($data['email']);
         
-        if ($this->users->hasUserWith($email)) {
+        if ($this->users->hasUserWithEmail($email)) {
             throw new EmailAlreadyUsedException;
         }
         
@@ -189,10 +196,10 @@ class UserController
      */
     public function displayUserAction($email)
     {
-        $user = $this->get('user.repository')->findBy(new Email($email));
-        
-        if (is_null($user)) {
-            throw new NotFoundException;
+        try {
+            $user = $this->get('user.repository')->getByEmail(new Email($email));
+        } catch (UserNotFoundException $e) {
+            throw new HttpNotFoundException;
         }
         
         return new Response($this->templateEngine->render('user_template.html', ['user' => $user]));
@@ -222,6 +229,6 @@ class UserController
 {% block example_explanation %}
 W przykładzie pokazano najbardziej istotną cechę repozytorium a jest nią dostarczenie interfejsu kolekcji 
 reprezentującej zbiór encji. Poza wyżej wymienionymi przykładami, kolekcja pozwala również na **usunięcie** elementu.
-W bardziej złożonych przypadkach, metody ``findByXXX`` można zastąpić metodą ``findBy(Criteria $criteria)`` gdzie
+W bardziej złożonych przypadkach, metody ``getByXXX`` lub ``findByXXX`` można zastąpić metodą ``getBy(Criteria $criteria)`` gdzie
 obiekt ``Criteria`` zawiera wszystkie dane na podstawie których należy przeszukać kolekcję.
 {% endblock %}
