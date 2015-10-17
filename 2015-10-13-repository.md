@@ -62,7 +62,7 @@ final class InMemoryRepository implements ObjectRepository
     
     public function contains(Object $object)
     {
-        return array_key_exists((string) $object->getId(), $object);
+        return array_key_exists((string) $object->getId(), $this->objects);
     }
 }
 ```
@@ -184,11 +184,14 @@ final class UserRegistrationService
 
 class UserController
 {
-    private $container; 
+    private $userRepository;
+     
+    private $templateEngine;
     
-    public function __construct(ServiceLocator $container)
+    public function __construct(UserRepository $userRepository, TemplateEngine $templateEngine)
     {
-        $this->container = $container;    
+        $this->userRepository = $userRepository;
+        $this->templateEngine = $templateEngine;
     }
     
     /**
@@ -197,7 +200,7 @@ class UserController
     public function displayUserAction($email)
     {
         try {
-            $user = $this->get('user.repository')->getByEmail(new Email($email));
+            $user = $this->userRepository->getByEmail(new Email($email));
         } catch (UserNotFoundException $e) {
             throw new HttpNotFoundException;
         }
