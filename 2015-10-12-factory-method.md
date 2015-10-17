@@ -82,9 +82,9 @@ final class Company implements User
 {
     private $nip;
     
-    public function __construct(NIP $peselNumber)
+    public function __construct(NIP $nipNumber)
     {
-        $this->nip = $nip;
+        $this->nip = $nipNumber;
     }
 }
 
@@ -102,7 +102,7 @@ final class MultipleUserTypeFactory implements UserFactory
         }
         
         if (array_key_exists('pesel', $data]) {
-            return new Company(new PESEL($data['pesel']));
+            return new PrivatePerson(new PESEL($data['pesel']));
         }
         
         throw new \InvalidArgumentException("Data required to create User needs to have PESEL or NIP.");
