@@ -172,7 +172,7 @@ class Invoice
     }
 }
 
-class IvnoiceProxy extends Invoice
+class InvoiceProxy extends Invoice
 {
     private $invoice; 
     
