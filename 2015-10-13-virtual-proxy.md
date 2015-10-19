@@ -3,7 +3,6 @@ title: Virtual proxy
 description: >
     Wzorzec stworzony w celu kontrolowania tworzenia lub dostępu do kosztownych obiektów. Oryginalny obiekt zastępowany
     jest przez proxy, które dziedziczy z oryginału dzięki czemu dostarcza identyczne API i może być użyty zamiast oryginału.
-    Oryginaly obiekt może być utworzony na żądanie.
 enabled: true
 type: Strukturalny 
 usage_info: null
@@ -13,7 +12,6 @@ posts: []
 {% block description %}
 Wzorzec stworzony w celu kontrolowania tworzenia lub dostępu do kosztownych obiektów. Oryginalny obiekt zastępowany
 jest przez proxy, które dziedziczy z oryginału dzięki czemu dostarcza identyczne API i może być użyty zamiast oryginału.
-Oryginalny obiekt może być utworzony na żądanie.  
 Wykorzystywany w sytuacjach, w których należy utworzyć obiekt w celu dostępu do części tego obiektu podczas
 gdy pozostała jego część jest nieużywana. 
 {% endblock %}
