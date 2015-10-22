@@ -12,8 +12,9 @@ posts: []
 {% block description %}
 Wzorzec stworzony w celu kontrolowania tworzenia lub dostępu do kosztownych obiektów. Oryginalny obiekt zastępowany
 jest przez proxy, które dziedziczy z oryginału dzięki czemu dostarcza identyczne API i może być użyty zamiast oryginału.
-Wykorzystywany w sytuacjach, w których należy utworzyć obiekt w celu dostępu do części tego obiektu podczas
-gdy pozostała jego część jest nieużywana. 
+Wykorzystywany w sytuacjach, w których utworzenie całego obiektu byłoby zbyt kosztowne jednak jest on niezbędny do
+poprawnego działania aplikacji. Virtual proxy pozwala oszczędzić pamięć w sytuacjach, gdzie budowanie obiektu wraz z jego
+wszystkimi zależnościami jest zbyt kosztowne lub niepotrzebne bez modyfikacji systemu lub jego części.
 {% endblock %}
 
 {% block dummy_implementation_php %}
