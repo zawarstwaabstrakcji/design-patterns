@@ -5,9 +5,7 @@ description: >
     klasy. Polega na dołączeniu nowych atrybutów poprzez “opakowanie” obiektu bazowego obiektem zwanym dekoratorem.
 enabled: true
 type: Strukturalny 
-usage_info: >
-    Dekorator powinien być stosowany w uzasadnionych przypadkach, bardzo często proste problemy związane z atrybutami można
-    rozwiązać w inny sposób, na przykład przekazując tabelę dodatkowych atrybutów.
+usage_info: null
 posts: []
 
 ---
@@ -38,7 +36,7 @@ class Decorator implements SomeFancyInterface
 {
     private $object;
 
-    public function __construct($object)
+    public function __construct(SomeFancyInterface $object)
     {
         $this->object = $object;
     }
@@ -89,14 +87,12 @@ banalny model dla sprzedaży telewizji kablowej, skupmy się na ofercie.
 
 {% block example_code_php %}
 ```language-php
-<?php
-
 interface Offer
 {
     public function getPrice();
 }
 
-final class SmallOffer implements Offer
+final class BaseOffer implements Offer
 {
 
     public function getPrice()
@@ -109,7 +105,7 @@ final class SportDecorator implements Offer
 {
     private $offer;
 
-    public function __construct($offer)
+    public function __construct(Offer $offer)
     {
         $this->offer = $offer;
     }
@@ -124,7 +120,7 @@ final class EducationDecorator implements Offer
 {
     private $offer;
 
-    public function __construct($offer)
+    public function __construct(Offer $offer)
     {
         $this->offer = $offer;
     }
@@ -139,7 +135,7 @@ final class CinemaDecorator implements Offer
 {
     private $offer;
 
-    public function __construct($offer)
+    public function __construct(Offer $offer)
     {
         $this->offer = $offer;
     }
@@ -150,7 +146,7 @@ final class CinemaDecorator implements Offer
     }
 }
 
-$offer = new SmallOffer();
+$offer = new BaseOffer();
 $offer = new SportDecorator($offer);
 $offer = new CinemaDecorator($offer);
 $offer = new EducationDecorator($offer);
