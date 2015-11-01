@@ -48,7 +48,7 @@ class Decorator implements SomeFancyInterface
 }
 
 $object = new BasicObject();
-$object = new Decorator($object);
+$decoratedObject = new Decorator($object);
 
 echo $object->getInfo() . PHP_EOL; // I'm basic object decorated!
 ```
@@ -80,9 +80,9 @@ banalny model dla sprzedaży telewizji kablowej, skupmy się na ofercie.
 {% endblock %}
 
 {% block example_specification %}
-- pkt 1. Mamy podstawowaą ofertę
-- pkt 2. Klient może do oferty dodać opcje: pakiet sportowy, edukacyjny i filmowy
-- pkt 3. Zbudujmy finalną ofertę za pomocą dekoratorów
+- Mamy podstawowaą ofertę
+- Klient może do oferty dodać opcje: pakiet sportowy, edukacyjny i filmowy
+- Zbudujmy finalną ofertę za pomocą dekoratorów
 {% endblock %}
 
 {% block example_code_php %}
@@ -147,11 +147,9 @@ final class CinemaDecorator implements Offer
 }
 
 $offer = new BaseOffer();
-$offer = new SportDecorator($offer);
-$offer = new CinemaDecorator($offer);
-$offer = new EducationDecorator($offer);
-
-echo $offer->getPrice() . PHP_EOL; // 100
+$offerWithSport = new SportDecorator($offer); 
+$offerWithSportAndCinema = new CinemaDecorator(new SportDecorator($offer));
+$fullOffer = new CinemaDecorator(new SportDecorator(new EducationDecorator($offer))); 
 ```
 {% endblock %}
 
