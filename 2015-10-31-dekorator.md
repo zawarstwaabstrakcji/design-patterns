@@ -94,7 +94,6 @@ interface Offer
 
 final class BaseOffer implements Offer
 {
-
     public function getPrice()
     {
         return 40;
