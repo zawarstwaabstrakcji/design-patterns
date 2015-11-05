@@ -50,7 +50,7 @@ class Decorator implements SomeFancyInterface
 $object = new BasicObject();
 $decoratedObject = new Decorator($object);
 
-echo $object->getInfo() . PHP_EOL; // I'm basic object decorated!
+echo $decoratedObject->getInfo() . PHP_EOL; // I'm basic object decorated!
 ```
 {% endblock %}
 
