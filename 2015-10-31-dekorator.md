@@ -80,7 +80,7 @@ banalny model dla sprzedaży telewizji kablowej, skupmy się na ofercie.
 {% endblock %}
 
 {% block example_specification %}
-- Mamy podstawowaą ofertę
+- Mamy podstawową ofertę
 - Klient może do oferty dodać opcje: pakiet sportowy, edukacyjny i filmowy
 - Zbudujmy finalną ofertę za pomocą dekoratorów
 {% endblock %}
