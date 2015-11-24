@@ -112,7 +112,7 @@ class DiscountCoupon implements Discount
     public function calculateDiscount($price)
     {
         if ($price > 19) {
-            return $price - 10;
+            return 10;
         }
         else {
             return 0;
