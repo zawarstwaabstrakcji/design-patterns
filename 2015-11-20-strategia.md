@@ -42,19 +42,9 @@ class Context
 {
     private $strategy;
 
-    public function __construct($condition)
+    public function __construct(Strategy $condition)
     {
-        switch ($condition)
-        {
-            case 1:
-                $this->strategy = new FirstStrategy();
-                break;
-            case 2:
-                $this->strategy = new SecondStrategy();
-                break;
-            default:
-                throw new RuntimeException('Unexpected condition');
-        }
+        $this->strategy = $condition;
     }
 
     public function doSomethingUnderStrategy()
@@ -101,9 +91,18 @@ zależna od wybranej zniżki
 
 {% block example_code_php %}
 ```language-php
-interface Discount 
+interface Discount
 {
     public function calculateDiscount($price);
+}
+
+// when there is no reason for discount
+class NoDiscount implements Discount
+{
+    public function calculateDiscount($price)
+    {
+        return 0;
+    }
 }
 
 // receive $10 discount if total price is greater than $19
@@ -113,68 +112,50 @@ class DiscountCoupon implements Discount
     {
         if ($price > 19) {
             return 10;
-        }
-        else {
+        } else {
             return 0;
         }
     }
 }
 
 // whoa! lucky you, black friday today, all prices 30% off
-class BlackFriday implements Discount 
+class BlackFriday implements Discount
 {
     public function calculateDiscount($price)
     {
-        return $price*0.3;
+        return $price * 0.3;
     }
 }
 
 // buy more, gain higher discount
-class ProgressDiscount implements Discount 
+class ProgressDiscount implements Discount
 {
     public function calculateDiscount($price)
     {
         if ($price > 50) {
-            return $price*0.20;
-        }
-        elseif ($price > 10 && $price <= 50) {
-            return $price*0.1;
-        }
-        else {
-            return $price*0.05;
+            return $price * 0.20;
+        } elseif ($price > 10 && $price <= 50) {
+            return $price * 0.1;
+        } else {
+            return $price * 0.05;
         }
     }
 }
 
-class Checkout 
+class Checkout
 {
     private $price;
     private $discountStrategy;
-    
-    public function __construct($price, $discountType)
+
+    public function __construct($price, Discount $discount)
     {
         $this->price = $price;
-        switch ($discountType)
-        {
-            case 'coupon':
-                $this->discountStrategy = new DiscountCoupon();
-                break;
-            case 'black_friday':
-                $this->discountStrategy = new BlackFriday();
-                break;
-            case 'progress':
-                $this->discountStrategy = new ProgressDiscount();
-                break;
-        }
+        $this->discountStrategy = $discount;
     }
-    
-    public function getTotalPrice() {
-        if (isset($this->discountStrategy)) {
-            return $this->price - $this->discountStrategy->calculateDiscount($this->price);
-        }
-        else {
-            return $this->price;
-        }
+
+    public function getTotalPrice()
+    {
+        return $this->price - $this->discountStrategy->calculateDiscount($this->price);
     }
 }
 ```
