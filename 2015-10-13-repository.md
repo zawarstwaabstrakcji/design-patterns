@@ -48,7 +48,7 @@ final class InMemoryRepository implements ObjectRepository
     
     public function getById(Id $id)
     {
-        if (!array_key_exists((string) $id, $object)) {
+        if (!array_key_exists((string) $id, $this->objects)) {
             throw new UserNotFoundException();
         }
         
